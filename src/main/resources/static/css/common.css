@@ -1,0 +1,183 @@
+/* 전체 레이아웃 */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    font-size: 1.5rem;
+    position: fixed; /* 맨 위에 고정 */
+    top: 0;
+    left: 0;
+    width: 100%; /* 화면 전체 너비 */
+    z-index: 1000; /* 가장 위에 표시 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 하단 그림자 추가 */
+}
+
+nav {
+    background-color: #f4f4f4;
+    width: 200px; /* 왼쪽 메뉴 너비 */
+    height: calc(100vh - 50px); /* 화면 높이에서 header 높이 제외 */
+    position: fixed; /* 고정 위치 */
+    top: 50px; /* header 높이 아래에 위치 */
+    left: 0;
+    padding: 1rem;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; /* 내용이 많을 경우 스크롤 */
+    z-index: 900; /* header보다 뒤쪽 */
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin-top:60px;
+}
+
+nav ul li {
+    margin: 0.5rem 0;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    padding: 0.5rem;
+    display: block;
+    border-radius: 5px;
+}
+
+nav ul li a:hover {
+    background-color: #ddd;
+}
+
+/* 콘텐츠 영역 */
+section {
+    margin-left: 220px; /* nav의 너비를 고려하여 마진 */
+    margin-top: 50px; /* header 높이 고려 */
+    background-color: #fafafa;
+    overflow-y: auto; /* 콘텐츠가 많을 경우 스크롤 */
+}
+section .container {
+    padding:80px;
+}
+footer {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 0.5rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    height: 50px; /* 고정된 높이 */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 공통 헤더 스타일 */
+.common-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-title {
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    flex-grow: 1;
+    margin: 0;
+    color: #333;
+}
+
+.header-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-button span,
+.close-button span {
+    font-size: 24px;
+    color: #333;
+}
+
+.header-button:hover span {
+    color: #007BFF; /* 버튼 호버 시 색상 */
+}
+
+#back{
+    position: fixed;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.5);
+    display:none;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events:auto;
+
+}
+#loadingBar{
+    width: 80px; /* 원하는 크기로 줄이기 */
+    height: 80px; /* 원하는 크기로 줄이기 */
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    pointer-events: none; /* 내부 요소 클릭 가능 */
+
+    /* 배경 이미지 조정 */
+    background-image: url("../img/loading.gif");
+    background-size: contain;  /* 배경 이미지 크기를 요소에 맞춤 */
+    background-repeat: no-repeat; /* 반복 방지 */
+    background-position: center; /* 중앙 정렬 */
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+.tab {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+}
+.tab_item {
+    padding: 0.6rem 1.3rem;
+    border: 1px solid #ddd;
+    list-style: none;
+}
+.tab_item.active {
+    display: inline-block;
+    border: 1px solid #4CAF50;
+    background-color: #4CAF50;
+    color: #fff;
+}
+.tab_content-wrapper {
+    padding: 1rem
+}
+.tab_content {
+    display: none;
+}
+.tab_content.active {
+    display: block;
+}

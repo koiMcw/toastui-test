@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<div th:fragment="content" th:class="container">
+    <div th:block><!-- 테이블 추가 이벤트 -->
+    <div class="btn-wrapper" style="margin-bottom: 10px;"></div>
+    <div th:id="grid"><h2>editor</h2></div>
+        <div>
+            <form name="sampleFm">
+            <input name="">
+            </form>
+        </div>
+        <div id="editor"></div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        SettlePay.execute(sampleFm);
+
+        const editor = dps.Ajax.createEditor('#editor',{
+            initialValue: 'Hello mincheol',
+             toolbarItems : [
+                 ['heading', 'bold', 'italic', 'strike'],
+                 ['table', 'image'],
+             ]
+         });
+    });
+
+</script>
+</div>
+</html>

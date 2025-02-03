@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+    <div th:fragment="content" th:class="container">
+        <div th:block>
+        <!-- 테이블 추가 이벤트 -->
+            <ul th:class="tab">
+                <li class="tab_item active">
+                    <a href="#tab1">Tab 1</a>
+                </li>
+                <li class="tab_item ">
+                    <a href="#tab2">Tab 2</a>
+                </li>
+                <li class="tab_item ">
+                    <a href="#tab3">Tab 3</a>
+                </li>
+                <li class="tab_item ">
+                    <a href="#tab4">Tab 4</a>
+                </li>
+            </ul>
+            <div class="tab_content-wrapper">
+                <div id="tab1" class="tab_content active">
+                    <div class="btn-wrapper" style="margin-bottom: 10px;">
+                        <div>
+                            <form id="searchForm">
+                                <input type="text" id="searchInput" placeholder="Enter search keyword">
+                            </form>
+                            <button id="searchButton">Search</button>
+                            <button id="getButton">get</button>
+                            <button id="createButton">create</button>
+                            <button id="updateButton">update</button>
+                            <button id="deleteButton">delete</button>
+                        </div>
+                        <div th:id="grid"></div>
+                    </div>
+                </div>
+                <div id="tab2" class="tab_content">2 tab content</div>
+                <div id="tab3" class="tab_content">3 tab content</div>
+                <div id="tab4" class="tab_content">4 tab content</div>
+            </div>
+        </div>
+        <script th:inline="javascript">
+            let grid;
+            document.addEventListener('DOMContentLoaded', () => {
+                const options = {
+                    pageOptions: {
+                        perPage: 10
+                    },
+                    header:{
+                        height: 100,
+                        complexColumns : [
+                            {
+                                header: 'information',
+                                name : 'subComplex',
+                                childNames: ['id','name']
+                            }
+                        ]
+                    },
+                    columns: [
+                        {header: 'ID', name: 'id', sortable: true},
+                        {header: 'Name', name: 'name', sortable: true},
+                        {header: 'Email', name: 'email', sortable: true},
+                        {header: 'Gender', name: 'gender', sortable: true},
+                        {header: 'Age', name: 'age', sortable: true},
+                        {header: 'Hobby', name: 'hobby', sortable: true},
+                    ],
+                }
+                const url = "/api/users";
+                grid = dps.Ajax.initGrid(url,options);
+               dps.Ajax.initTab();
+            });
+
+            document.getElementById('getButton').addEventListener('click', ()=>{
+                getCheckedRows();
+            })
+            //checked 된 row data 추출
+            function getCheckedRows(){
+                const checkedRows = grid.getCheckedRows();
+                console.log('Checked Rows', checkedRows);
+                return checkedRows;
+            }
+
+            //AXIOS TEST
+            /*
+            const getButton = document.getElementById('getButton');
+            const createButton = document.getElementById('createButton');
+            const updateButton = document.getElementById('updateButton');
+            const deleteButton = document.getElementById('deleteButton');
+            getButton.addEventListener('click', async() => {
+                try {
+                    const response = await getRequest("api/getUsers");
+
+                } catch (error) {
+                    console.log(`Error: ${error.message}`);
+                }
+            });
+            createButton.addEventListener('click', async() => {
+                try {
+                    const response = await postRequest("api/createUsers");
+
+                } catch (error) {
+                    console.log(`Error: ${error.message}`);
+                }
+            });
+            updateButton.addEventListener('click', async() => {
+                try {
+                    const response = await putRequest("api/updateUsers");
+
+                } catch (error) {
+                    console.log(`Error: ${error.message}`);
+                }
+            });
+            deleteButton.addEventListener('click', async() => {
+                try {
+                    const response = await deleteRequest("api/deleteUsers");
+
+                } catch (error) {
+                    console.log(`Error: ${error.message}`);
+                }
+            });
+            */
+            // 검색 버튼 이벤트 리스너
+            document.getElementById('searchButton').addEventListener('click', () => {
+                const keyword = document.getElementById('searchInput').value.trim();
+                grid.readData(1, {keyword}); // 검색어와 함께 첫 페이지 데이터 요청
+            });
+        </script>
+    </div>
+</html>

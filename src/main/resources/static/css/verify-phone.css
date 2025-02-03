@@ -1,0 +1,295 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.header button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.header h1 {
+    font-size: 16px;
+    margin: 0;
+    font-weight: bold;
+}
+
+/* Content */
+.content {
+    margin-top: 10px;
+}
+
+h2 {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+/* Input Groups */
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.input-group input[type="text"],
+.input-group input[type="password"],
+.input-group select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background: #f5f5f5;
+    color: #333;
+}
+
+/* 주민등록번호 스타일 */
+.resident-number {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.resident-number input {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #f5f5f5;
+}
+
+.resident-number span {
+    font-size: 16px;
+    color: #999;
+}
+
+/* 모달 기본 스타일 */
+.modal {
+    display: none; /* 초기에는 숨김 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+    z-index: 1000;
+    justify-content: center;
+    align-items: flex-end; /* 아래쪽에 정렬 */
+}
+
+/* 모달 콘텐츠 */
+.modal-content {
+    background: #fff;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 12px 12px 0 0;
+    padding: 20px;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(100%); /* 초기에는 화면 아래로 숨김 */
+    transition: transform 0.3s ease-out; /* 애니메이션 효과 */
+}
+
+.modal.show .modal-content {
+    transform: translateY(0); /* 화면으로 올라옴 */
+}
+
+.carrier-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 간격 조정 */
+}
+
+.carrier-button {
+    padding: 10px 15px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    cursor: pointer;
+    color: #333;
+}
+
+.carrier-button:hover {
+    background-color: #e9e9e9;
+}
+
+#phoneNumber {
+    flex: 1; /* 넓이 자동 조정 */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    color: #666;
+    cursor: not-allowed;
+}
+
+/* 통신사 리스트 스타일 */
+.carrier-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.carrier-item {
+    padding: 15px;
+    font-size: 16px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.carrier-item:hover {
+    background-color: #f0f0f0;
+}
+
+/* Carrier Selection */
+.carrier-select {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.carrier-select select {
+    flex: 1;
+    margin-right: 10px;
+}
+
+/* Terms and Conditions */
+.terms {
+    margin-top: 20px;
+}
+
+.term-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.term-item input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.term-item label {
+    flex: 1;
+    color: #333;
+}
+
+.term-item a {
+    font-size: 14px;
+    color: #007bff;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.term-item a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+.footer {
+    margin-top: 20px;
+}
+
+.footer button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #ddd;
+    border: none;
+    border-radius: 4px;
+    cursor: not-allowed;
+    transition: background-color 0.3s ease;
+}
+
+.footer button.active {
+    background-color: #007bff;
+    cursor: pointer;
+}
+
+/* 약관 동의 섹션 */
+.agreement-group {
+    margin-top: 20px;
+}
+
+.agreement-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.agreement-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.agreement-checkbox {
+    margin-right: 10px;
+}
+
+.agreement-link {
+    font-size: 14px;
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.agreement-link:hover {
+    text-decoration: underline;
+}
+
+.certify-button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #ddd;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: not-allowed;
+}
+
+.certify-button.active {
+    background-color: #007BFF;
+    cursor: pointer;
+}

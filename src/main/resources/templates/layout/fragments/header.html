@@ -1,0 +1,23 @@
+
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="headerFragment">
+    <head>
+        <link th:inline="css" rel="stylesheet" type="text/css" th:href="@{/css/common.css}">
+        <link th:inline="css" rel="stylesheet" type="text/css" th:href="@{/toast/tui-grid.css}">
+        <link th:inline="css" rel="stylesheet" type="text/css" th:href="@{/toast/tui-pagination.css}">
+        <script th:inline="javascript" type="text/javascript" th:src="@{/common.js}"></script>
+        <script th:inline="javascript" type="text/javascript" th:src="@{/js/settlePay.js}"></script>
+        <link th:inline="css" rel="stylesheet" type="text/css" th:href="@{/toast/toastui-editor.min.css}">
+        <!-- AXIOS -->
+        <script th:inline="javascript" type="text/javascript" th:src="@{/js/axios.min.js}"></script>
+        <script th:inline="javascript" type="text/javascript" th:src="@{/js/api.js}"></script>
+        <script th:inline="javascript" type="text/javascript" th:src="@{/js/axiosInstance.js}"></script>
+        <!--toast ui paging 처리는 tui-pagination 라이브러리가 tui-grid 라이브러리보다 우선 적용되어야 한다.-->
+        <script th:inline="javascript" type="text/javascript" th:src="@{/toast/tui-pagination.js}"></script>
+        <script th:inline="javascript" type="text/javascript" th:src="@{/toast/toastui-editor-all.min.js}"></script>
+        <script th:inline="javascript" type="text/javascript" th:src="@{/toast/tui-grid.js}"></script>
+        <script th:inline="javascript" type="text/javascript" th:src="@{/toast/tui-code-snippet.js}"></script>
+    </head>
+</th:block>
+</html>

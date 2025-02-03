@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내통장결제</title>
+    <link rel="stylesheet" th:href="@{/css/verify-phone.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+</head>
+<body>
+<div class="container">
+<!--    <div th:replace="layout/fragments/header :: common-header('내통장결제')"></div>-->
+
+    <!-- 본문 -->
+    <div class="content">
+        <h2>본인명의 휴대폰으로 인증해 주세요.</h2>
+
+        <!-- 이름 입력 -->
+        <div class="input-group">
+            <label for="name">이름</label>
+            <input type="text" id="name" placeholder="홍길동">
+        </div>
+
+        <!-- 주민등록번호 입력 -->
+        <div class="input-group">
+            <label>주민등록번호</label>
+            <div class="resident-number">
+                <input type="text" id="residentNumber1" maxlength="6" placeholder="991231">
+                <span>-</span>
+                <input type="text" id="residentNumber2" maxlength="1" placeholder="1">
+                <span>● ● ● ● ●</span>
+            </div>
+        </div>
+
+        <!-- 통신사 선택 -->
+        <div class="input-group">
+            <label for="carrierButton">통신사 선택</label>
+            <div class="carrier-container">
+                <!-- 통신사 선택 버튼 -->
+                <button id="carrierButton" class="carrier-button">통신사 선택</button>
+                <!-- 핸드폰 번호 (수정 불가) -->
+                <input type="text" id="phoneNumber" th:value="${phoneNumber}" readonly>
+            </div>
+        </div>
+
+        <!-- 약관 동의 -->
+        <div class="agreement-group">
+            <ul class="agreement-list">
+                <li class="agreement-item">
+                    <label>
+                        <input type="checkbox" class="agreement-checkbox">
+                        본인 확인 이용약관 (필수)
+                    </label>
+                    <a href="#" class="agreement-link">펼치기</a>
+                </li>
+            </ul>
+
+            <!-- 인증 요청 버튼 -->
+            <button id="certifyButton" class="certify-button" disabled>인증요청</button>
+    </div>
+
+    <!-- 모달 -->
+    <div id="carrierModal" class="modal">
+        <div class="modal-content">
+            <ul class="carrier-list">
+                <li class="carrier-item">SKT</li>
+                <li class="carrier-item">KT</li>
+                <li class="carrier-item">LG U+</li>
+                <li class="carrier-item">SKT 알뜰폰</li>
+                <li class="carrier-item">KT 알뜰폰</li>
+                <li class="carrier-item">LG U+ 알뜰폰</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/auth/verifyPhone.js}"></script>
+</body>
+</html>
