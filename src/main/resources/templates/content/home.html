@@ -23,10 +23,27 @@
                 <div id="tab1" class="tab_content active">
                     <div class="btn-wrapper" style="margin-bottom: 10px;">
                         <div>
-                            <form id="searchForm">
-                                <input type="text" id="searchInput" placeholder="Enter search keyword">
-                            </form>
-                            <button id="searchButton">Search</button>
+                            <div style="display: flex; align-items: center;">
+                                <form id="searchForm">
+                                    <input type="text" id="searchInput" placeholder="Enter search keyword">
+                                </form>
+
+                                <!-- Datepicker -->
+                                <div class="range-date-picker-container" style="display: flex; align-items: center;">
+                                    <div class="tui-datepicker-input tui-datetime-input tui-has-focus" style="margin-right: 5px;">
+                                        <input id="startpicker-input" type="text" autocomplete="off" readonly="readonly">
+                                        <div id="startpicker-container"></div>
+                                    </div>
+                                    <div class="flex-grow-0 d-flex align-items-center mx-1" style="margin-right: 5px;">~</div>
+                                    <div class="tui-datepicker-input tui-datetime-input tui-has-focus" style="margin-right: 5px;">
+                                        <input id="endpicker-input" type="text" autocomplete="off" readonly="readonly">
+                                        <div id="endpicker-container"></div>
+                                    </div>
+                                </div>
+
+                                <button id="searchButton">Search</button>
+                            </div>
+
                             <button id="getButton">get</button>
                             <button id="createButton">create</button>
                             <button id="updateButton">update</button>
@@ -64,6 +81,7 @@
                         {header: 'Gender', name: 'gender', sortable: true},
                         {header: 'Age', name: 'age', sortable: true},
                         {header: 'Hobby', name: 'hobby', sortable: true},
+                        {header: 'Birthday', name: 'birthday', sortable: true},
                     ],
                 }
                 const url = "/api/users";
@@ -123,7 +141,36 @@
             // 검색 버튼 이벤트 리스너
             document.getElementById('searchButton').addEventListener('click', () => {
                 const keyword = document.getElementById('searchInput').value.trim();
-                grid.readData(1, {keyword}); // 검색어와 함께 첫 페이지 데이터 요청
+                const startDate = document.getElementById('startpicker-input').value.trim();
+                const endDate = document.getElementById('endpicker-input').value.trim();
+
+                grid.readData(1, {keyword, startDate, endDate}); // 검색어와 함께 첫 페이지 데이터 요청
+            });
+
+            /* 달력 rangePicker */
+
+            const startDate = new Date(1990, 0, 1); // 1990년 1월 1일 (월은 0부터 시작)
+            const endDate = new Date(startDate);
+            endDate.setFullYear(startDate.getFullYear() + 10); // 시작 날짜에 10년 추가
+
+            const rangePicker = tui.DatePicker.createRangePicker({
+                startpicker: {
+                    input: '#startpicker-input',
+                    container: '#startpicker-container',
+                    date: startDate,
+                },
+                endpicker: {
+                    input: '#endpicker-input',
+                    container: '#endpicker-container',
+                    date: endDate,
+                },
+                type: 'date', // 선택 유형 (date, month, year)
+                format: 'yyyy-MM-dd',
+                timePicker: false,
+                language: 'ko',
+                selectableRanges: [
+                    [new Date(1990, 0, 1), new Date(2000, 11, 31)]
+                ]
             });
         </script>
     </div>

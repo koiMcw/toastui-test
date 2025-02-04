@@ -181,3 +181,17 @@ a {
 .tab_content.active {
     display: block;
 }
+
+/* grid 요소를 뒤로 보내고 datepicker 요소가 앞으로 오도록 위치시켜야 함.
+ * toast UI에서 제공하는 css 적용시키면 datepicker가 다른 요소에 가려져 보이지 않음.
+ */
+.tui-grid-container {
+    z-index: 1;
+}
+.tui-datepicker {
+    z-index: 10;
+}
+/* Toast UI 에서 기본적으로 제공하는 datepicker 의 width가 170px로 설정되어있음.*/
+.tui-datetime-input {
+    width: 100px !important;
+}

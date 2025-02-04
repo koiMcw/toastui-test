@@ -13,11 +13,13 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 import java.nio.file.Files;
-import java.util.Map;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -28,7 +30,17 @@ public class HomeApiController {
 
     // 샘플 데이터
     private final List<UserDto> users = IntStream.rangeClosed(1, 100)
-            .mapToObj(i -> new UserDto(i, "User" + i, "user" + i + "@example.com", i % 2 == 0 ? "man" : "woman", 20 + (i % 30), "H" + (i % 5)))
+            .mapToObj(i -> {
+                // 랜덤한 생일(birthday) 생성 (1990-01-01 ~ 2000-12-31 범위)
+                LocalDate birthday = randomDateBetween(LocalDate.of(1990, 1, 1), LocalDate.of(2000, 12, 31));
+
+                // 날짜 포맷 (yyyy-MM-dd)
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                String formattedBirthday = birthday.format(formatter);
+
+                return new UserDto(i, "User" + i, "user" + i + "@example.com",
+                        i % 2 == 0 ? "man" : "woman", 20 + (i % 30), "H" + (i % 5), formattedBirthday);
+            })
             .collect(Collectors.toList());
     //이미지 업로드 경로
     private final String uploadDir = Paths.get("C:", "tui-editor", "upload").toString();
@@ -42,18 +54,54 @@ public class HomeApiController {
         List<String> keywordList = params.getKeyword();
         int page =   params.getPage();
         int perPage = params.getPerPage();
+        String startDateStr = params.getStartDate();
+        String endDateStr = params.getEndDate();
 
-        if (keywordList != null && !keywordList.isEmpty()) {
-            for(UserDto user : users) {
-                for(String keyword : keywordList) {
-                    if(user.toString().contains(keyword)) {
-                        filteredUsers.add(user);
-                    }
-                }
+        LocalDate startDate = null;
+        LocalDate endDate = null;
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        try {
+            if (startDateStr != null && !startDateStr.isEmpty()) {
+                startDate = LocalDate.parse(startDateStr, formatter);
             }
-        }else{
-            filteredUsers.addAll(users);
+            if (endDateStr != null && !endDateStr.isEmpty()) {
+                endDate = LocalDate.parse(endDateStr, formatter);
+            }
+        } catch (DateTimeParseException e) {
+            return ResponseEntity.badRequest().body(null); // 잘못된 날짜 형식 처리
         }
+
+        for (UserDto user : users) {
+            boolean matchesKeyword = (keywordList == null || keywordList.isEmpty())
+                    || keywordList.stream().anyMatch(keyword -> user.toString().contains(keyword));
+
+            // 생일로 날짜 필터링
+            boolean matchesDate = true;
+            if (user.getBirthday() != null && !user.getBirthday().isEmpty()) {
+                LocalDate birthday = LocalDate.parse(user.getBirthday(), formatter);
+                matchesDate = isDateInRange(birthday, startDate, endDate);
+            }
+
+            // 키워드와 날짜 조건 모두 만족하는 경우 추가
+            if (matchesKeyword && matchesDate) {
+                filteredUsers.add(user);
+            }
+        }
+//
+//        if (keywordList != null && !keywordList.isEmpty()) {
+//            for(UserDto user : users) {
+//                for(String keyword : keywordList) {
+//                    if(user.toString().contains(keyword)) {
+//                        filteredUsers.add(user);
+//                    }
+//                }
+//            }
+//        }
+//        else{
+//            filteredUsers.addAll(users);
+//        }
 
         ToastUIGridResponseDto response = PageUtil.paginate(filteredUsers,page,perPage);
 
@@ -154,5 +202,23 @@ public class HomeApiController {
             // 예외 처리
             throw new RuntimeException(e);
         }
+    }
+
+    private LocalDate randomDateBetween(LocalDate start, LocalDate end) {
+        long startEpochDay = start.toEpochDay();
+        long endEpochDay = end.toEpochDay();
+        long randomDay = startEpochDay + (long) (Math.random() * (endEpochDay - startEpochDay + 1));
+        return LocalDate.ofEpochDay(randomDay);
+    }
+
+    // 날짜 범위 체크 함수
+    private boolean isDateInRange(LocalDate createdAt, LocalDate startDate, LocalDate endDate) {
+        if (startDate != null && createdAt.isBefore(startDate)) {
+            return false;
+        }
+        if (endDate != null && createdAt.isAfter(endDate)) {
+            return false;
+        }
+        return true;
     }
 }

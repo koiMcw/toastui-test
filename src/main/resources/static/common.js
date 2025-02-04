@@ -63,7 +63,8 @@ dps.Ajax = {
                 {header: 'Email', name: 'email', sortable: true},
                 {header: 'Gender', name: 'gender', sortable: true},
                 {header: 'Age', name: 'age', sortable: true},
-                {header: 'Hobby', name: 'hobby', sortable: true}
+                {header: 'Hobby', name: 'hobby', sortable: true},
+                {header: 'Birthday', name: 'birthday', sortable: true}
             ],
                 summary: {
                 height: 40,

@@ -20,14 +20,18 @@ public class PaginationRequestDto {
     private String sortColumn;              // 정렬 컬럼
     private boolean sortAscending = true;   // 정렬 기준
     private List<String> keyword;           // 검색 키워드
+    private String startDate;
+    private String endDate;
 
     @Builder
-    public PaginationRequestDto(Integer page, Integer perPage,String sortColumn, boolean sortAscending, List<String> keyword) {
+    public PaginationRequestDto(Integer page, Integer perPage,String sortColumn, boolean sortAscending, List<String> keyword, String startDate, String endDate) {
         this.page = page;
         this.perPage = perPage;
         this.sortColumn = sortColumn;
         this.sortAscending = sortAscending;
         this.keyword = keyword;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
 }
